@@ -1,12 +1,18 @@
 package tableexample;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import javax.swing.table.AbstractTableModel;
+
+import tableexample.TableItem.MyType;
 
 public class TableModel extends AbstractTableModel{
 	private ArrayList<TableItem> tableItems;
 	private String[] columnNames;
+	private final Class[] columnClass = new Class[] {
+	        Integer.class, MyType.class, String.class
+	    };
 	
 	public TableModel()
 	{
@@ -38,6 +44,12 @@ public class TableModel extends AbstractTableModel{
 	}
 	
 	@Override
+	public Class<?> getColumnClass(int columnIndex)
+	{
+		return columnClass[columnIndex];
+	}
+	
+	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		// TODO Auto-generated method stub
 		switch(columnIndex) {
@@ -55,13 +67,12 @@ public class TableModel extends AbstractTableModel{
 		// TODO Auto-generated method stub
 		switch(columnIndex) {
 			case 1:
-				tableItems.get(rowIndex).setType((String) aValue);
+				tableItems.get(rowIndex).setType((MyType) aValue);
 				break;
 			default://case 2
-				tableItems.get(rowIndex).setValue((String) aValue);
+				tableItems.get(rowIndex).setValue((String) aValue);	
 				break;
-	}
-		fireTableCellUpdated(rowIndex, columnIndex);
+		}	
 	}
 	
 	@Override
@@ -76,7 +87,24 @@ public class TableModel extends AbstractTableModel{
 	
 	public void addNewTableItem() {
 		int lastItemId = this.getRowCount() + 1;
-		TableItem tableItem = new TableItem(lastItemId, "t"+lastItemId, "v"+lastItemId);
+		Random r = new Random();
+		int rand_int = r.nextInt(4)+1;
+		MyType myType = null;
+		switch(rand_int) {
+			case 1:
+				myType = MyType.lt;
+				break;
+			case 2:
+				myType = MyType.mt;
+				break;
+			case 3:
+				myType = MyType.sn;
+				break;
+			case 4:
+				myType = MyType.watt;
+				break;
+		}
+		TableItem tableItem = new TableItem(lastItemId, myType, "v"+lastItemId);
 		this.tableItems.add(tableItem);
 		fireTableDataChanged();
 	}

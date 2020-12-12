@@ -2,11 +2,15 @@ package tableexample;
 
 public class TableItem {
 	
+	public static enum MyType {
+        lt, mt, sn, watt;
+    }
+	
 	private int id;
-	private String type;
+	private MyType type;
 	private String value;
 	
-	public TableItem(int id, String type, String value) {
+	public TableItem(int id, MyType type, String value) {
 		this.id = id;
 		this.type = type;
 		this.value = value;
@@ -18,10 +22,10 @@ public class TableItem {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getType() {
+	public MyType getType() {
 		return type;
 	}
-	public void setType(String type) {
+	public void setType(MyType type) {
 		this.type = type;
 	}
 	public String getValue() {

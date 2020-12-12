@@ -11,8 +11,8 @@ public class TableController {
 	{
 		this.model = model;
 		this.view = view;
-	
 		this.view.addListenerToAddButton(new AddListener());
+		this.view.addListenerToComboBox(new TypeBoxListener() );
 		this.view.setModelOfTable(model);
 	}
 	
@@ -21,6 +21,22 @@ public class TableController {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			model.addNewTableItem();
+		}
+	}
+	
+	class TypeBoxListener implements ActionListener
+	{
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			// TODO Auto-generated method stub
+			int rowCount = model.getRowCount();
+			for(int i=0; i<rowCount; i++) {
+				if (view.getSelectedComboBox().equals(model.getValueAt(i, 1).toString())) {
+					model.fireTableCellUpdated(i, 1);
+				}
+				
+			}
 		}
 		
 	}
